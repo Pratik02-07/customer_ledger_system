@@ -1,6 +1,16 @@
 <?php
 include 'db_connect.php';
-require_once __DIR__ . '/vendor/autoload.php'; // ✅ mPDF लायब्ररी जोडली
+require_once __DIR__ . '/vendor/autoload.php';
+use Mpdf\Mpdf;
+
+// ✅ mPDF Marathi Compatible Setup (No ConfigVariables Needed)
+$mpdf = new Mpdf([
+    'mode' => 'utf-8',             // Unicode support
+    'format' => 'A4',              // Page format
+    'default_font' => 'freeserif'  // ✅ Supports Marathi (Devanagari script)
+]);
+
+// ✅ mPDF लायब्ररी जोडली
 
 
 
@@ -67,7 +77,7 @@ if (isset($_GET['export_pdf'])) {
     $transactions = $conn->query("SELECT * FROM transactions WHERE customer_id = $customer_id ORDER BY date ASC");
 
     $html = "<h2 style='text-align:center;'>$customer_name — Account Ledger</h2>";
-    $html .= "<p><b>प्रारंभिक शिल्लक:</b> ₹" . number_format($opening_balance, 2) . "</p>";
+    $html .= "<p><b>प्रारंभिक शिल्लक:/Opening balence:</b> ₹" . number_format($opening_balance, 2) . "</p>";
     $html .= "<table border='1' width='100%' cellspacing='0' cellpadding='5'>
     <tr>
         <th>तारीख</th>
@@ -83,7 +93,7 @@ if (isset($_GET['export_pdf'])) {
     $balance = $opening_balance;
     $totalQty = $totalDeposit = $totalBorrow = $totalItemAmount = 0;
 
-    $html .= "<tr><td colspan='7'><b>प्रारंभिक शिल्लक</b></td><td><b>₹" . number_format($balance, 2) . "</b></td></tr>";
+    $html .= "<tr><td colspan='7'><b>प्रारंभिक शिल्लक /opening balence</b></td><td><b>₹" . number_format($balance, 2) . "</b></td></tr>";
 
     while ($row = $transactions->fetch_assoc()) {
         $item_total = $row['qty'] * $row['rate'];
@@ -116,8 +126,8 @@ if (isset($_GET['export_pdf'])) {
         <td>₹" . number_format($balance, 2) . "</td>
     </tr></table>";
 
-    // ✅ PDF तयार करा
-    $mpdf = new \mPDF('utf-8', 'A4');
+    // ✅ PDF तयार करा (mPDF v8+ namespaced API)
+    $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4','default_font' => 'freeserif']);
     $mpdf->SetFooter("Generated on " . date('d-m-Y H:i') . " | {PAGENO}");
     $mpdf->WriteHTML($html);
     $mpdf->Output("Ledger_$customer_name.pdf", 'D');
@@ -196,7 +206,7 @@ $transactions = $conn->query("SELECT * FROM transactions WHERE customer_id = $cu
 
 <!-- Opening Balance -->
 <form method="POST" style="margin-bottom:15px;">
-    <label><b>प्रारंभिक शिल्लक (₹):</b></label>
+    <label><b>प्रारंभिक शिल्लक (₹):/opening balence</b></label>
     <input type="number" name="new_opening" step="0.01" value="<?php echo $opening_balance; ?>" required>
     <button type="submit" name="update_opening" style="background:green;">💾 जतन करा</button>
 </form>

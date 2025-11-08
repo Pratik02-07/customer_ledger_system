@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <label>ग्राहकाचे नाव:</label>
     <input type="text" name="name" placeholder="उदा. Akshay Hirugade" required>
 
-    <label>प्रारंभिक शिल्लक (₹):</label>
+    <label>प्रारंभिक शिल्लक / Opening balence(₹):</label>
     <input type="number" step="0.01" name="opening_balance" placeholder="उदा. 5000" value="0.00">
 
     <button type="submit">ग्राहक जोडा</button>

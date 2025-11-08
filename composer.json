@@ -1,6 +1,17 @@
 {
+    "name": "vrushabh/customer_ledger_system2",
+    "autoload": {
+        "psr-4": {
+            "Vrushabh\\CustomerLedgerSystem2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vrushabh",
+            "email": "vrushabhpatil7731@gmail.com"
+        }
+    ],
     "require": {
-        "dompdf/dompdf": "^3.1",
-        "mpdf/mpdf": "6.1"
+        "mpdf/mpdf": "8.2"
     }
 }
