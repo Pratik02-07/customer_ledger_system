@@ -4,11 +4,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Mpdf\Mpdf;
 
 // ✅ mPDF Marathi Compatible Setup (No ConfigVariables Needed)
-$mpdf = new Mpdf([
-    'mode' => 'utf-8',             // Unicode support
-    'format' => 'A4',              // Page format
-    'default_font' => 'freeserif'  // ✅ Supports Marathi (Devanagari script)
-]);
 
 // ✅ mPDF लायब्ररी जोडली
 
